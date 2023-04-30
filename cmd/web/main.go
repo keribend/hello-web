@@ -1,0 +1,15 @@
+package main
+
+import (
+	"context"
+	"log"
+	"os/signal"
+	"syscall"
+)
+
+func main() {
+	ctx, cancel := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	defer cancel()
+
+	log.Println(cliExecute(ctx))
+}
