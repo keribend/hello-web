@@ -1,3 +1,3 @@
-module sandbox/hello-web
+module github.com/keribend/sandbox/hello-web
 
-go 1.20
+go 1.21
