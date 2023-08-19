@@ -4,11 +4,22 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
 	handler := http.HandlerFunc(Server)
-	log.Fatal(http.ListenAndServe(":8080", handler))
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+		log.Printf("defaulting to port: [%s]", port)
+	}
+
+	log.Printf("listening on port %s", port)
+	if err := http.ListenAndServe(":"+port, handler); err != nil {
+		log.Fatal(err)
+	}
 }
 
 func Server(w http.ResponseWriter, r *http.Request) {
