@@ -11,5 +11,5 @@ func main() {
 	ctx, cancel := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer cancel()
 
-	log.Println(cliExecute(ctx))
+	log.Println(webServerListen(ctx))
 }
