@@ -1,0 +1,41 @@
+{{define "countersHTML"}}
+<div id="counters">
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Value</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{range .}}
+      <tr>
+        <td>{{.ID}}</td>
+        <td>{{.Name}}</td>
+        <td>{{.Value}}</td>
+        <td>
+          <button>Edit</button>
+          <button>Delete</button>
+        </td>
+      </tr>
+      {{end}}
+      <tr>
+        <td>-</td>
+        <td>
+          <input type="text" name="name" id="name">
+        </td>
+        <td>
+          <input type="text" name="value" id="value">
+        </td>
+        <td>
+          <button>
+            Create
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{{end}}

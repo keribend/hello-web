@@ -12,15 +12,28 @@ import (
 const PORT = "8080"
 
 func webServerListen(ctx context.Context) error {
-	router := chi.NewRouter()
+	r := chi.NewRouter()
 	webEngine := NewWebEngine()
 
-	router.Handle("/static", http.FileServer(http.Dir("cmd/web/static")))
-	router.Get("/", webEngine.Serve)
+	// Business logic routes
+	r.Route("/counters", func(r chi.Router) {
+		r.Get("/counters", webEngine.GetCounters)
+		r.Route("/{counterId:[0-9]+}", func(r chi.Router) {
+			// r.Get("/", webEngine.GetCounter)
+			r.Post("/increase", webEngine.IncreaseCounter)
+			r.Post("/decrease", webEngine.DecreaseCounter)
+		})
+	})
+
+	// Serve the main page
+	r.Get("/", webEngine.Serve)
+
+	// Serve static assets
+	r.Handle("/static/*", http.StripPrefix("/static", http.FileServer(http.Dir("cmd/web/static/"))))
 
 	srv := &http.Server{
-		Addr:    "127.0.0.1:" + PORT,
-		Handler: router,
+		Addr:    "localhost:" + PORT,
+		Handler: r,
 	}
 
 	go func() {

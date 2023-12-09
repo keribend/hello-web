@@ -1,9 +1,13 @@
+{{define "homeHTML"}}
 <html>
   <head>
     <title>My counter app</title>
+    <script src="/static/htmx.min.js"></script>
   </head>
   <body>
-    something here
-    <script src="static/htmx.min.js"></script>
+    <div id="app">
+    {{template "countersHTML" .}}
+    </div>
   </body>
 </html>
+{{end}}
