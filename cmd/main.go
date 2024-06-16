@@ -1,14 +1,32 @@
 package main
 
 import (
+	"fmt"
+	"log"
 	"net/http"
 
-	"github.com/a-h/templ"
 	"github.com/keribend/hello-web/views"
 )
 
-func main() {
-	http.Handle("/", templ.Handler(views.Html()))
+var globalCounter int
 
-	http.ListenAndServe(":8080", nil)
+func main() {
+	mux := http.NewServeMux()
+	mux.HandleFunc("GET /", getCounter)
+	mux.HandleFunc("POST /", incrementCounter)
+
+	fmt.Println("listening on http://localhost:8080")
+	if err := http.ListenAndServe("localhost:8080", mux); err != nil {
+		log.Printf("error listening: %v", err)
+	}
+}
+
+func getCounter(w http.ResponseWriter, r *http.Request) {
+	component := views.Html(globalCounter)
+	component.Render(r.Context(), w)
+}
+
+func incrementCounter(w http.ResponseWriter, r *http.Request) {
+	globalCounter++
+	getCounter(w, r)
 }

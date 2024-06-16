@@ -1,0 +1,28 @@
+package layout
+
+import (
+	"strconv"
+)
+
+templ Body(counter int) {
+	<body>
+		@AppContent(counter)
+	</body>
+}
+
+templ AppContent(counter int) {
+	<h1>Hello AppContent web app!</h1>
+	@GlobalCounter(counter)
+	@CounterForm()
+}
+
+templ GlobalCounter(counter int) {
+	<p>Global: { strconv.Itoa(counter) }</p>
+}
+
+templ CounterForm() {
+	<form action="/" method="POST">
+		<div><button type="submit" name="global" value="global">Global</button></div>
+	</form>
+}
+

@@ -1,11 +1,12 @@
 package views
 
-templ Html() {
+import (
+	"github.com/keribend/hello-web/views/layout"
+)
+
+templ Html(counter int) {
 	<html>
-		<head>
-		</head>
-		<body>
-			<h1>Hello web!</h1>
-		</body>
+		@layout.Head()
+		@layout.Body(counter)
 	</html>
 }
