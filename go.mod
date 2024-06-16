@@ -1,10 +1,5 @@
-module sandbox/hello-web
+module github.com/keribend/hello-web
 
-go 1.20
+go 1.22.0
 
-require go.uber.org/zap v1.26.0
-
-require (
-	github.com/go-chi/chi/v5 v5.0.10
-	go.uber.org/multierr v1.10.0 // indirect
-)
+require github.com/a-h/templ v0.2.707 // indirect
