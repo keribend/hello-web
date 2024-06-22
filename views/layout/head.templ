@@ -3,6 +3,7 @@ package layout
 templ Head() {
 	<head>
 		@Scripts()
+		@Links()
 	</head>
 }
 
@@ -11,5 +12,13 @@ templ Scripts() {
 }
 
 templ HtmxScript() {
-	<script src="https://unpkg.com/htmx.org@1.9.12"></script>
+	<script src="assets/js/htmx.min.js" type="text/javascript"></script>
+}
+
+templ Links() {
+	@CSSLink()
+}
+
+templ CSSLink() {
+	<link href="assets/css/style.css" rel="stylesheet">
 }

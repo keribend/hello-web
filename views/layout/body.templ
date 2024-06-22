@@ -12,6 +12,7 @@ templ Body(counter int) {
 
 templ AppContent(counter int) {
 	<h1>Hello AppContent web app!</h1>
+	<h1 class="text-3xl font-bold underline">Hello AppContent web app!</h1>
 	@GlobalCounter(counter)
 	@CounterForm()
 }
@@ -22,7 +23,7 @@ templ GlobalCounter(counter int) {
 
 templ CounterForm() {
 	<form action="/" method="POST">
-		<div><button type="submit" name="global" value="global">Global</button></div>
+		<div><button class="btn btn-primary" type="submit" name="global" value="global">Global</button></div>
 	</form>
 }
 

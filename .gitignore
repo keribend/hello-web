@@ -7,7 +7,7 @@
 .vscode
 
 #
-# BE ignores
+# Project ignores
 # 
 *.exe
 *.exe~
@@ -17,3 +17,12 @@
 *.test
 *.out
 go.work
+bin
+tmp
+
+
+#
+# Frontend crap
+#
+static/css/style.css
+tailwind/node_modules

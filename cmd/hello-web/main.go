@@ -12,6 +12,9 @@ var globalCounter int
 
 func main() {
 	mux := http.NewServeMux()
+	fileServer := http.FileServer(http.Dir("./assets"))
+	mux.Handle("GET /assets/*", http.StripPrefix("/assets/", fileServer))
+
 	mux.HandleFunc("GET /", getCounter)
 	mux.HandleFunc("POST /", incrementCounter)
 
