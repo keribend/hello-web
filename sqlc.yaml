@@ -1,0 +1,10 @@
+version: "2"
+sql:
+  - engine: sqlite
+    schema: ./cmd/hello-web/migrations
+    queries: internal/repository/query
+    gen:
+      go:
+        package: repository
+        out: internal/repository
+        

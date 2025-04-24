@@ -1,14 +1,9 @@
-#
 # General ignores
-#
-
 .DS_Store
 .idea
 .vscode
 
-#
-# Project ignores
-# 
+# Backend crap
 *.exe
 *.exe~
 *.dll
@@ -20,9 +15,9 @@ go.work
 bin
 tmp
 
-
-#
 # Frontend crap
-#
-static/css/style.css
-tailwind/node_modules
+public/static/css/tw.css
+node_modules
+
+# other random crap
+.env

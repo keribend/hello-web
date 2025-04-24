@@ -1,0 +1,17 @@
+{
+  "name": "hello-web",
+  "version": "0.1.0",
+  "description": "hello-web: Full stack application using go+templ+htmx+tailwind+daisyui",
+  "scripts": {
+    "build:css": "npx @tailwindcss/cli -i input.css -o ./public/static/css/tw.css --watch"
+  },
+  "keywords": [],
+  "author": "keribend",
+  "license": "MIT",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.4",
+    "@tailwindcss/typography": "^0.5.13",
+    "daisyui": "^5.0.27",
+    "tailwindcss": "^4.1.4"
+  }
+}

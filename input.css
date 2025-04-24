@@ -1,0 +1,8 @@
+@import "tailwindcss" source(none);
+@plugin "@tailwindcss/typography";
+@config "./tailwind.config.js";
+@source "./internal/views/**/*.templ";
+@plugin "daisyui" {
+  themes:
+    night --default;
+}
