@@ -20,10 +20,10 @@ ORDER BY checkin.create_time DESC
 `
 
 type CheckinsForEventRow struct {
-	Event      Event
-	ID         int64
-	EventID    int64
-	CreateTime time.Time
+	Event      Event     `json:"event"`
+	ID         int64     `json:"id"`
+	EventID    int64     `json:"event_id"`
+	CreateTime time.Time `json:"create_time"`
 }
 
 func (q *Queries) CheckinsForEvent(ctx context.Context, id int64) ([]CheckinsForEventRow, error) {
@@ -79,8 +79,8 @@ UPDATE checkin SET create_time = ? WHERE id = ?
 `
 
 type UpdateCheckinTimeParams struct {
-	CreateTime time.Time
-	ID         int64
+	CreateTime time.Time `json:"create_time"`
+	ID         int64     `json:"id"`
 }
 
 func (q *Queries) UpdateCheckinTime(ctx context.Context, arg UpdateCheckinTimeParams) error {

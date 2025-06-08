@@ -5,18 +5,14 @@ import (
 	"database/sql"
 	"log"
 	"net/http"
-	"os"
 	"os/signal"
-	"path/filepath"
-	"strings"
 	"syscall"
 	"time"
 
-	"github.com/go-chi/chi/v5"
 	_ "modernc.org/sqlite"
 
 	"github.com/keribend/hello-web/internal/controller"
-	"github.com/keribend/hello-web/internal/http/router"
+	"github.com/keribend/hello-web/internal/http/routing"
 	"github.com/keribend/hello-web/internal/repository"
 	"github.com/keribend/hello-web/internal/service"
 )
@@ -37,21 +33,20 @@ func main() {
 func bootstrapApp(ctx context.Context) error {
 	repo := repository.New(DB)
 	service := service.New(repo)
-	controller := controller.New(service)
+	htmlController := controller.NewHTMLController(service)
+	apiController := controller.NewAPIController(service)
 
-	r := router.New()
-	r.Get("/", controller.EventList)
-	r.Post("/events/{eventId}/checkin", controller.AddCheckinToEvent)
-	r.Get("/checkins", controller.Checkins)
+	mainRouter := http.NewServeMux()
+	uiRouter := routing.NewUIRouter(htmlController)
+	apiRouter := routing.NewAPIRouter(apiController)
 
-	// Create a route along /assets that will serve contents from the ./ui/assets/ folder
-	workDir, _ := os.Getwd()
-	filesDir := http.Dir(filepath.Join(workDir, "public/static"))
-	FileServer(r, "/static", filesDir)
+	mainRouter.Handle("/api/", http.StripPrefix("/api", apiRouter))
+	mainRouter.Handle("/ui/", http.StripPrefix("/ui", uiRouter))
+	mainRouter.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("./public/static"))))
 
 	server := http.Server{
 		Addr:    ":8080",
-		Handler: r,
+		Handler: mainRouter,
 	}
 
 	go gracefulShutdown(ctx, &server)
@@ -77,26 +72,6 @@ func gracefulShutdown(ctx context.Context, server *http.Server) {
 		return
 	}
 	log.Println("graceful shutdown complete")
-}
-
-// FileServer conveniently sets up a http.FileServer handler to serve static files from a http.FileSystem
-func FileServer(r chi.Router, path string, root http.FileSystem) {
-	if strings.ContainsAny(path, "{}*") {
-		log.Panic("FileServer does not permit any URL parameters.")
-	}
-
-	if path != "/" && path[len(path)-1] != '/' {
-		r.Get(path, http.RedirectHandler(path+"/", http.StatusMovedPermanently).ServeHTTP)
-		path += "/"
-	}
-	path += "*"
-
-	r.Get(path, func(w http.ResponseWriter, r *http.Request) {
-		rctx := chi.RouteContext(r.Context())
-		pathPrefix := strings.TrimSuffix(rctx.RoutePattern(), "/*")
-		fs := http.StripPrefix(pathPrefix, http.FileServer(root))
-		fs.ServeHTTP(w, r)
-	})
 }
 
 func initDB() {

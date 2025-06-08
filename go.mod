@@ -4,7 +4,7 @@ go 1.24.1
 
 require (
 	github.com/a-h/templ v0.3.857
-	github.com/go-chi/chi/v5 v5.2.1
+	modernc.org/sqlite v1.37.0
 )
 
 require (
@@ -18,5 +18,4 @@ require (
 	modernc.org/libc v1.63.0 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.10.0 // indirect
-	modernc.org/sqlite v1.37.0 // indirect
 )

@@ -9,13 +9,13 @@ import (
 )
 
 type Checkin struct {
-	ID         int64
-	EventID    int64
-	CreateTime time.Time
+	ID         int64     `json:"id"`
+	EventID    int64     `json:"event_id"`
+	CreateTime time.Time `json:"create_time"`
 }
 
 type Event struct {
-	ID         int64
-	Name       string
-	CreateTime time.Time
+	ID         int64     `json:"id"`
+	Name       string    `json:"name"`
+	CreateTime time.Time `json:"create_time"`
 }

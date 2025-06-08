@@ -75,8 +75,8 @@ UPDATE event SET name = ? WHERE id = ?
 `
 
 type UpdateNameParams struct {
-	Name string
-	ID   int64
+	Name string `json:"name"`
+	ID   int64  `json:"id"`
 }
 
 func (q *Queries) UpdateName(ctx context.Context, arg UpdateNameParams) error {

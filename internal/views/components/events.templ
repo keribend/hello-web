@@ -7,7 +7,7 @@ import (
 
 templ EventList(events []repository.Event) {
   @Home() {
-    <div class="flex justify-center h-screen items-center">
+    <div class="flex justify-center items-center">
 			<ul class="list bg-base-100 rounded-box shadow-md">
 				<li class="p-4 pb-2 text-xl opacity-60 tracking-wide">Events</li>
 			
@@ -20,7 +20,7 @@ templ EventList(events []repository.Event) {
 						</div>
 						<button
 							class="btn btn-square btn-ghost"
-							hx-post={ fmt.Sprintf("/events/%d/checkin", event.ID) }
+							hx-post={ fmt.Sprintf("/ui/events/%d/checkin", event.ID) }
 							hx-target="body"
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
