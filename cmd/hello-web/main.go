@@ -101,6 +101,7 @@ func FileServer(r chi.Router, path string, root http.FileSystem) {
 
 func initDB() {
 	var err error
+	
 	DB, err = sql.Open("sqlite", "file:./bin/hello-web.db?_foreign_keys=true")
 	if err != nil {
 		log.Fatal(err)
