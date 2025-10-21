@@ -1,0 +1,10 @@
+name: Test Runner
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: self-hosted
+    steps:
+      - run: echo "GitHub Runner on Synology works!"
+      - run: docker version
