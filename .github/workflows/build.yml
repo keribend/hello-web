@@ -42,7 +42,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # 5. Build and push multi-arch image
+      # 5. Create tmp cache folder
+      - name: Prepare cache directories
+        run: mkdir -p /tmp/.buildx-cache /tmp/.buildx-cache-new
+
+      # 6. Build and push multi-arch image
       - name: Build and push image
         uses: docker/build-push-action@v6
         with:
@@ -57,9 +61,13 @@ jobs:
             ghcr.io/keribend/hello-web:${{ github.ref_name }}
             ghcr.io/keribend/hello-web:latest
 
-      # 6. Persist new cache between runs
+      # 7. Persist new cache between runs
       - name: Move new cache
         if: success()
         run: |
-         rm -rf /tmp/.buildx-cache
-         mv /tmp/.buildx-cache-new /tmp/.buildx-cache 
+          if [ -d /tmp/.buildx-cache-new ]; then
+            rm -rf /tmp/.buildx-cache
+            mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+          else
+            echo "No new cache directory found - skipping cache update."
+          fi
